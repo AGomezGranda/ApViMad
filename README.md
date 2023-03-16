@@ -7,7 +7,7 @@ Aplicación web para el alquiler de viviendas destinado principalmente a estudia
 
 
 ### Integrantes:
-Jaime Ruiz-Ogarrio Matías
+Jaime Ruiz-Ogarrio Matías,
 Álvaro Gómez Granda
 
 ---
@@ -20,3 +20,5 @@ Se utilizará MongoDB
 
 ### Lenguajes de programación:
 La aplicación se basa en el uso de JavaScript
+También se utilizará Node.js, en este caso la librería de Express.js
+
