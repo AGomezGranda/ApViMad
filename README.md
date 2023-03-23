@@ -1,24 +1,14 @@
 # SW2 - Proyecto
+
 ---
-## Información general proyecto:
 
-### Temática Aplicación:
-Aplicación web para el alquiler de viviendas destinado principalmente a estudiantes.
+## Información general proyecto
 
+### Temática Aplicación
 
-### Integrantes:
+Aplicación web para el alquiler y compraventa de viviendas destinado principalmente a estudiantes. El área de negocio se centrará únicamente en Madrid ya que se utilizará la API del Ayuntamiento de Madrid.
+
+### Integrantes
+
 Jaime Ruiz-Ogarrio Matías,
 Álvaro Gómez Granda
-
----
-
-## Tecnologías del proyecto:
-
-### Base de datos:
-En los requerimientos del proyecto, se especifica que tiene que ser una BD NoSQL
-Se utilizará MongoDB
-
-### Lenguajes de programación:
-La aplicación se basa en el uso de JavaScript
-También se utilizará Node.js, en este caso la librería de Express.js
-
