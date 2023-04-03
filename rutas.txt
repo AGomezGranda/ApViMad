@@ -1,0 +1,82 @@
+Desde el portal de datos abiertos del Ayuntamiento de Madrid:
+
+GET /catalogo/206974-0-agenda-eventos-culturales-100.json
+GET /catalogo/202311-0-colegios-publicos.json
+GET /catalogo/200186-0-polideportivos.json
+##cambiar json a XML
+
+Rutas CRUD - Vivienda
+
+#Todas las viviendas
+GET /viviendas
+
+#Vivienda concreta, vista específica
+GET /viviendas/{id]
+
+#Vista de editar
+GET /viviendas/{id]/edit
+
+#Acutalizar vivienda
+PUT /vivienda/{id}
+
+#Eliminar vivienda
+DELETE /vivienda/{id}
+
+#Vista de crear
+GET /vivienda/create
+
+#Crear vivienda
+POST /vivienda/{id}
+
+Rutas Usuarios
+
+#Todos los usuarios
+GET /users ??
+
+#Info usuario concreto
+GET /users/{id}
+
+#Vista crear usuario
+GET /users/create
+
+#Crear usuario
+POST /users/{id}
+
+#Vista editar usuario
+GET /users/{id]/edit
+
+#Editar usuario
+PUT /users/{id]
+
+#Eliminar usuario
+DELETE /users/{id}
+
+---
+
+Users
+
+id
+nombre
+apellido
+email
+direccion
+ciudad
+pais
+telefono
+nombreUsuario
+contraseña
+
+---
+
+Viviendas
+
+id
+descripcion
+barrio
+calle
+numero
+piso
+id_usuario
+precio
+
+
