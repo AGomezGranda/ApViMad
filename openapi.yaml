@@ -1,0 +1,277 @@
+openapi: 3.0.3
+info:
+  title: ApViMad API REST
+  description: |-
+    Esta API se encarga de manejar la información de la base de datos de la empresa ApViMad.
+  version: 1.0.11
+servers:
+  - url: https://localhost/api/v3
+paths:
+  /viviendas:
+    get:
+      summary: GET de las viviendas
+      description: Muestra todas las viviendas disponibles
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/viviendas' 
+  
+    post:
+      summary: Crea una nueva vivienda
+      description: Para crear una nueva vivienda cumplir y rellenar los campos descritos en el schema de vivienda asi como el tipo de dato de los mismos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/vivienda"
+      responses:
+        '201':
+          description: 'Created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/nuevaVivienda' 
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /viviendas/{id}:
+    parameters:
+      - $ref: "#/components/parameters/id"
+    get:
+      summary: Obtener información de una vivienda concreta
+      description: Nos permite obtener y visualzar los datos de una vivienda concreta
+      responses:
+        "200":
+          description: "OK"
+          content:
+             application/json:
+              schema: 
+                $ref: '#/components/schemas/vivienda'
+    put:
+      summary: Editar una vivienda
+      description: Permite modificar los datos de una vivienda concreta siempre y cuando se cumplan los requisitos de su schema
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/actualizar_vivienda"
+      responses:
+        "200":
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/nuevaVivienda"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Eliminar una vivienda
+      description: Borra una vivienda de forma definitiva
+      responses:
+        "200":
+          description: "Ok"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /usuarios/{id}:
+    parameters:
+      - $ref: "#/components/parameters/id"
+    get:
+      summary: Obtener información de un usuario concreto
+      description: Permite al usuario obtener y visualzar los datos de su correspondiente perfil
+      responses:
+        "200":
+          description: "OK"
+          content:
+             application/json:
+              schema: 
+                $ref: '#/components/schemas/usuario'
+    put:
+      summary: Editar un usuario
+      description: Permite al usuario modificar los datos de su perfil
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/actualizar_usuario"
+      responses:
+        "200":
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/nuevoUsuario"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: Eliminar un usuario
+      description: Permite al usuario borrar su perfil
+      responses:
+        "200":
+          description: "Ok"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'        
+components:
+  parameters:
+    id:
+      description: identificador unico de la vivienda o el usuario
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: "#/components/schemas/id"
+  responses:
+    BadRequest:
+      description: (BadRequest) los datos enviados son incorrectos o hay datos obligatorios no enviados
+    Unauthorized: 
+      description: (Unauthorized) las credenciales de autorización no son validas
+    NotFound:
+      description: (NotFound) no se encontró la información
+    ServerError:
+      description: Error en el servidor
+  schemas:
+    id:
+      type: integer
+      minimum: 1
+    viviendas:
+      type: array
+      minItems: 1
+      items:
+        $ref: "#/components/schemas/vivienda"
+    vivienda:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/id"
+        descripcion:
+          type: string
+          description: resumen de la vivienda
+        barrio:
+          type: string
+          description: barrio donde se encuentra la vivienda
+        calle:
+          type: string
+          description: calle donde se encuentra la vivienda
+        numero:
+          type: integer
+          description: numero de portal de la vivienda
+        piso:
+          type: string
+          description: planta y puerta de la vivienda  
+        propietario:
+          type: string
+          description: dueño de la vivienda
+        precio:
+          type: string
+          description: coste de la vivienda
+    nuevaVivienda:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/id"
+        url:
+          description: Enlace a la vivienda creada
+          type: string
+          format: uri
+    actualizar_vivienda:
+      required:
+      - id
+      - descripcion
+      - barrio
+      - calle
+      - numero
+      - piso
+      - propietario
+      - precio
+      $ref: "#/components/schemas/vivienda"
+      url:
+          description: Enlace a la vivienda editada
+          type: string
+          format: uri
+    usuario:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/id"
+        nombre:
+          type: string
+          description: nombre de la persona asociada al usuario
+        apellidos:
+          type: string
+          description: apellidos de la persona asociada al usuario
+        email:
+          type: string
+          description: email de la persona asociada al usuario
+        telefono:
+          type: integer
+          description: numero de teléfono del usuario
+        ciudad:
+          type: string
+          description: lugar de residencia del usuario  
+        pais:
+          type: string
+          description: pais de residencia del usuario
+        username:
+          type: string
+          description: nombre de usuario
+        contraseña:
+          type: string
+          description: nombre de usuario
+    nuevoUsuario:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/id"
+        url:
+          description: Enlace al usuario creado
+          type: string
+          format: uri
+    actualizar_usuario:
+      required:
+      - id
+      - descripcion
+      - barrio
+      - calle
+      - numero
+      - piso
+      - propietario
+      - precio
+      $ref: "#/components/schemas/vivienda"
+      url:
+          description: Enlace a la vivienda editada
+          type: string
+          format: uri    
