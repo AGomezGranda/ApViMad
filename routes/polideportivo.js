@@ -4,7 +4,8 @@ const path = require('path');
 
 // Ruta para manejar la vista de polideportivos
 router.get('/polideportivo', (req, res) => {
-  res.sendFile(path.join(__dirname, '../views/polideportivo.ejs'));
+  // res.send('Estas en la vista de polideportivos');
+  res.render('polideportivo', { title: 'ApViMad' });
 });
 
 module.exports = router;
