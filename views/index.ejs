@@ -18,34 +18,8 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h1> <%= title %> </h1>
-      <p class="lead">
-        Here you can find the best apartments in the city of Madrid, Spain
-      </p>
-      <hr />
 
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Menu</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Houses for Sale</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Rent</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/polideportivo">Polideportivos</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      
+      <%- include('header')%>     
 
       <div class="row">
         <div class="col-md-6">

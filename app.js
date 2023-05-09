@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -22,7 +24,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.get('/polideportivo', polideportivoRouter);
+//app.use('/polideportivo', polideportivoRouter);
+
+app.get('/polideportivos', async (req, res) => {
+  try {
+    const response = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
+    const data = response.data;
+    res.render('/views/polideportivo', { data });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

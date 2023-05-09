@@ -53,4 +53,4 @@ function Polideportivos() {
   );
 }
 
-export default { Polideportivos };
+export default { Polideportivos, fetchDataPolideportivos };
