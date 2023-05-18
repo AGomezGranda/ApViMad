@@ -9,7 +9,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var polideportivoRouter = require('./routes/polideportivo');
-
+var colegioRouter = require('./routes/colegio')
 var app = express();
 
 // view engine setup
@@ -25,17 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.get('/polideportivo', polideportivoRouter);
-
-// app.get('/polideportivos', async (req, res) => {
-//   try {
-//     const response = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
-//     const data = response.data;
-//     res.render('/views/polideportivo', { data });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('Internal Server Error');
-//   }
-// });
+app.get('/colegio', colegioRouter)
 
 
 // catch 404 and forward to error handler

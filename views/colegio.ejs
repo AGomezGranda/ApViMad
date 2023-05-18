@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/5/lux/bootstrap.min.css"
+    />
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container mt-5">
+      <%- include('header')%>
+      <h1>Colegios</h1>
+      <div id="colegio-container"></div>
+    </div>
+    <%- include('footer')%>
+
+    <script>
+        //conectar al ayuntamiento de madrid, volcar lista de colegios en XML
+      const CORS_PROXY_URL = "https://api.allorigins.win/raw?url=";
+      const API_URL_COLEGIOS = "https://datos.madrid.es/egob/catalogo/202311-0-colegios-publicos.xml"
+
+      axios
+      .get(CORS_PROXY_URL + encodeURIComponent(API_URL_COLEGIOS))
+      .then((response) => {
+        const xmlData = response.data; // Contenido XML de la respuesta
+        console.log("aaa");
+        console.log(xmlData);
+      })
+      .catch((error)=>{
+        console.log(error);
+      });
+    </script>
+    
+    
+  </body>
+</html>
