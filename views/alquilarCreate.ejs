@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/5/lux/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <%- include('header')%>
+      <h1>Alquiler</h1>
+      <p class="lead">
+        Aqui puedes encontrar los mejores apartamentos en la ciudad de Madrid,
+        España
+      </p>
+
+      <!-- crear vivienda de alquiler button -->
+      <a href="/alquilar/crear" class="btn btn-primary m-2">Crear vivienda de alquiler</a>
+
+      <!-- Vista para crear/editar un elemento -->
+        <form action="/alquilar" method="POST">
+            <input type="text" name="name" placeholder="Nombre" required>
+            <input type="text" name="summary" placeholder="Resumen" required>
+            <input type="number" name="price" placeholder="Precio" required>
+            <button type="submit">Guardar</button>
+        </form>
+
+  
+    </div>
+
+    <script>
+      function deleteListing(listingId) {
+        fetch(`/alquilar/${listingId}`, {
+          method: 'DELETE'
+        })
+        .then(response => {
+          if (response.ok) {
+            // La eliminación fue exitosa, puedes realizar alguna acción adicional si lo deseas
+            window.location.reload(); // Actualizar la página después de la eliminación
+          } else {
+            // Hubo un error en la eliminación
+            throw new Error('Error al eliminar el documento');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          // Manejar el error de alguna manera adecuada, por ejemplo, mostrar un mensaje de error en la página
+        });
+      }
+      </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

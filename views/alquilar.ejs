@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/5/lux/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <%- include('header')%>
+      <h1>Alquiler</h1>
+      <p class="lead">
+        Aqui puedes encontrar los mejores apartamentos en la ciudad de Madrid,
+        España
+      </p>
+
+      <!-- crear vivienda de alquiler button -->
+      
+      <a href="/alquilar/create" class="btn btn-primary m-2">Crear vivienda de alquiler</a>
+
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Acciones</th>
+
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <!-- Agrega más columnas según tus necesidades -->
+          </tr>
+        </thead>
+        <tbody>
+          <% listings.forEach(function(listing) { %>
+          <!-- Dentro del bucle forEach para cada listado -->
+          <tr>
+            
+            <td>
+              <!-- <a href="/alquilar/edit/<%= listing._id %>" class="btn btn-primary m-2">Editar</a> -->
+              <button onclick="deleteListing('<%= listing._id %>')" class="btn btn-danger">Eliminar</button>
+            </td>
+
+            <td><%= listing.name %></td>
+            <td class="w-5"><%= listing.summary %></td>
+            <td><%= listing.price %></td>
+          </tr>
+          <!-- Fin del bucle forEach -->
+
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      function deleteListing(listingId) {
+        fetch(`/alquilar/${listingId}`, {
+          method: 'DELETE'
+        })
+        .then(response => {
+          if (response.ok) {
+            // La eliminación fue exitosa, puedes realizar alguna acción adicional si lo deseas
+            window.location.reload(); // Actualizar la página después de la eliminación
+          } else {
+            // Hubo un error en la eliminación
+            throw new Error('Error al eliminar el documento');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          // Manejar el error de alguna manera adecuada, por ejemplo, mostrar un mensaje de error en la página
+        });
+      }
+      </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
