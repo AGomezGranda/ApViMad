@@ -1,0 +1,65 @@
+<!---<%- JSON.stringify(viviendas) %> --->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.min.css" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/bootstrap-icons.min.css" />
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <%- include('header') %>
+    <h1 class="d-flex justify-content-between align-items-center">
+      Viviendas
+      <small>
+        <a href="/viviendas/create" class="btn btn-primary">Crear nueva vivienda</a>
+      </small>
+    </h1>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Descripción</th>
+            <th>Barrio</th>
+            <th>Calle</th>
+            <th>Número</th>
+            <th>Piso</th>
+            <th>Propietario</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% viviendas.forEach((vivienda) => { %>
+            <tr>
+              <td><%= vivienda.descripcion %></td>
+              <td><%= vivienda.barrio %></td>
+              <td><%= vivienda.calle %></td>
+              <td><%= vivienda.numero %></td>
+              <td><%= vivienda.piso %></td>
+              <td><%= vivienda.propietario %></td>
+              <td><%= vivienda.precio %></td>
+              <td>
+                <a href="/viviendas/<%= vivienda._id %>" class="btn btn-primary btn-sm">Ver</a>
+                <form action="/viviendas/editar/<%= vivienda._id %>" method="GET" style="display: inline;">
+                  <button type="submit" class="btn btn-secondary btn-sm" >Editar</button>
+                </form>
+                <form action="/viviendas/<%= vivienda._id %>?_method=DELETE" method="POST" style="display: inline;">
+                  <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <%- include('footer') %>
+</body>
+</html>
