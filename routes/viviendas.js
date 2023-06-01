@@ -18,14 +18,14 @@ router.get('/:id', (req, res) => {
   const { id } = req.params;
   Vivienda
     .findById(id)
-    .then((data) => res.json(data))
+    // .then((data) => res.json(data))
+    .then((data) => res.render('vivienda', { title: 'ApViMad', vivienda: data }))
     .catch((err) => res.json({ message: err }));
 });
 
-//vista de crear una vivienda
-router.get('/create', (req, res) => {
-  res.send('Esta es la vista create')
-  //res.render('create');
+// Vista de crear una vivienda
+router.get('/create/view', (req, res) => {
+  res.render('createVivienda');
 });
 
 // Crear una vivienda
@@ -36,6 +36,7 @@ router.post('/', (req, res) => {
     .then(() => res.redirect('/viviendas'))
     .catch((err) => res.status(400).json({ message: err.message }));
 });
+
 
 // Ruta para acceder a la vista de editar
 router.get('/editar/:id', (req, res) => {
