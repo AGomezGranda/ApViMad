@@ -35,7 +35,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.get('/polideportivo', polideportivoRouter);
 app.get('/colegio', colegioRouter)
-app.get('/alquiler', alquilerRouter)
 app.use('/viviendas', comprarRouter)
 app.use('/alquiler', alquilerRouter)
 
