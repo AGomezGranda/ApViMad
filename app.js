@@ -1,12 +1,12 @@
 const axios = require('axios');
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const connectDB = require('./routes/db');
 const methodOverride = require('method-override');
+require('dotenv').config();
+
 
 
 var indexRouter = require('./routes/index');
@@ -16,7 +16,7 @@ var colegioRouter = require('./routes/colegio')
 var alquilerRouter = require('./routes/alquiler')
 var comprarRouter = require('./routes/viviendas')
 var app = express();
-connectDB();
+
 
 
 // view engine setup
@@ -37,7 +37,7 @@ app.get('/polideportivo', polideportivoRouter);
 app.get('/colegio', colegioRouter)
 app.get('/alquiler', alquilerRouter)
 app.use('/viviendas', comprarRouter)
-//app.get('/create', comprarRouter)
+app.use('/alquiler', alquilerRouter)
 
 
 // catch 404 and forward to error handler
