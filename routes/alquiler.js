@@ -19,19 +19,24 @@ dbo.connectToDatabase();
 // Obtener todos los registros de alquiler en formato XML
 router.get('/', async (req, res) => {
   let limit = MAX_RESULTS;
-  if (req.query.limit){
+  if (req.query.limit) {
     limit = Math.min(parseInt(req.query.limit), MAX_RESULTS);
   }
   let next = req.query.next;
-  let query = {}
-  if (next){
-     query = {_id: {$lt: new ObjectId(next)}}
+  let query = {};
+  if (next) {
+    query = { _id: { $lt: new ObjectId(next) } };
   }
+  
+  if (req.query.barrio) {
+    query.barrio = req.query.barrio;
+  }
+
   const dbConnect = dbo.getDb();
   let results = await dbConnect
     .collection(COLLECTION)
-    .find(query,{projection:{descripcion:1, barrio:1, calle:1, numero:1, piso:1, propietario:1, precio:1}})
-    .sort({_id: -1})
+    .find(query, { projection: { descripcion: 1, barrio: 1, calle: 1, numero: 1, piso: 1, propietario: 1, precio: 1 } })
+    .sort({ _id: -1 })
     .limit(limit)
     .toArray()
     .catch(err => res.status(400).send('Error searching for viviendas'));
@@ -39,7 +44,6 @@ router.get('/', async (req, res) => {
   next = results.length == limit ? results[results.length - 1]._id : null;
   res.render('alquiler', { title: 'ApViMad', viviendas: results });
 });
-
 
 // Obtener un registro de alquiler por ID en formato XML
 router.get('/:id', async (req, res) => {
@@ -62,21 +66,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// router.get('/:id', async (req, res) => {
-//   const dbConnect = dbo.getDb();
-//   let query = { _id: new ObjectId(req.params.id) };
-//   let result = await dbConnect.collection(COLLECTION).findOne(query);
-//   if (!result) {
-//     res.send('Not found').status(404);
-//   } else {
-//     res.render('alquilerVista', { viviendas: result });
-//   }
-// });
-
-router.get('/create/view', (req, res) => {
-  res.render('createAlquiler');
-});
-
 // Agregar un registro de alquiler en formato XML
 router.post('/', async (req, res) => {
   const dbConnect = dbo.getDb();
@@ -85,19 +74,6 @@ router.post('/', async (req, res) => {
     res.send('Not found').status(404);
   } else {
     res.redirect('/alquiler');
-  }
-});
-
-// Generar vista para editar por ID
-router.get('/editar/:id', async (req, res) => {
-  const dbConnect = dbo.getDb();
-  let query = { _id: new ObjectId(req.params.id) };
-  let result = await dbConnect.collection(COLLECTION).findOne(query);
-
-  if (!result) {
-    res.status(404).json({ message: 'Vivienda no encontrada' });
-  } else {
-    res.render('editarAlquiler', { vivienda: result });
   }
 });
 
@@ -125,7 +101,19 @@ router.delete('/:id', async (req, res) => {
   } else {
     res.redirect('/alquiler');
   }
+});
 
+router.get('/barrio/:barrio', async (req, res) => {
+  const barrio = req.params.barrio;
+
+  const dbConnect = dbo.getDb();
+  let results = await dbConnect
+    .collection(COLLECTION)
+    .find({ barrio: barrio }, { projection: { descripcion: 1, barrio: 1, calle: 1, numero: 1, piso: 1, propietario: 1, precio: 1 } })
+    .toArray()
+    .catch(err => res.status(400).send('Error searching for alquileres'));
+
+  res.render('alquiler', { title: 'ApViMad', viviendas: results });
 });
 
 module.exports = router;
