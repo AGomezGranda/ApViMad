@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Detalles de Vivienda</title>
+  
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <!-- Bootstrap CSS -->
+  <link
+    rel="stylesheet"
+    href="https://bootswatch.com/5/lux/bootstrap.min.css"
+  />
+  <!-- Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/bootstrap-icons.min.css"
+  />
+
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Detalles de la Vivienda</h1>
+    <div class="card">
+      <div class="card-body">
+        <p class="card-text"><strong>Descripción:</strong> <%= viviendas.descripcion %></p>
+        <p class="card-text"><strong>Barrio:</strong> <%= viviendas.barrio %></p>
+        <p class="card-text"><strong>Calle:</strong> <%= viviendas.calle %></p>
+        <p class="card-text"><strong>Número:</strong> <%= viviendas.numero %></p>
+        <p class="card-text"><strong>Piso:</strong> <%= viviendas.piso %></p>
+        <p class="card-text"><strong>Propietario:</strong> <%= viviendas.propietario %></p>
+        <p class="card-text"><strong>Precio:</strong> <%= viviendas.precio %></p>
+      </div>
+    </div>
+    <a href="/alquiler" class="btn btn-primary mt-3">Volver a la lista de alquiler</a>
+  </div>
+</body>
+</html>

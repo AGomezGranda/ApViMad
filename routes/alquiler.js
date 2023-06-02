@@ -37,11 +37,31 @@ router.get('/', async (req, res) => {
     .catch(err => res.status(400).send('Error searching for viviendas'));
 
   next = results.length == limit ? results[results.length - 1]._id : null;
-  res.render('viviendas', { title: 'ApViMad', viviendas: results });
+  res.render('alquiler', { title: 'ApViMad', viviendas: results });
 });
 
 
 // Obtener un registro de alquiler por ID en formato XML
+// router.get('/:id', async (req, res) => {
+//   const dbConnect = dbo.getDb();
+//   let query = { _id: new ObjectId(req.params.id) };
+//   let result = await dbConnect.collection(COLLECTION).findOne(query);
+//   if (!result) {
+//     res.send('Not found').status(404);
+//   } else {
+//     const xmlBuilder = new xml2js.Builder({
+//       rootName: 'alquiler',
+//       headless: true,
+//       xmldec: { version: '1.0', encoding: 'UTF-8' },
+//       xmlSchema: xmlSchema,
+//     });
+//     const xml = xmlBuilder.buildObject(result);
+
+//     res.set('Content-Type', 'application/xml');
+//     res.send(xml).status(200);
+//   }
+// });
+
 router.get('/:id', async (req, res) => {
   const dbConnect = dbo.getDb();
   let query = { _id: new ObjectId(req.params.id) };
@@ -49,17 +69,12 @@ router.get('/:id', async (req, res) => {
   if (!result) {
     res.send('Not found').status(404);
   } else {
-    const xmlBuilder = new xml2js.Builder({
-      rootName: 'alquiler',
-      headless: true,
-      xmldec: { version: '1.0', encoding: 'UTF-8' },
-      xmlSchema: xmlSchema,
-    });
-    const xml = xmlBuilder.buildObject(result);
-
-    res.set('Content-Type', 'application/xml');
-    res.send(xml).status(200);
+    res.render('alquilerVista', { viviendas: result });
   }
+});
+
+router.get('/create/view', (req, res) => {
+  res.render('createAlquiler');
 });
 
 // Agregar un registro de alquiler en formato XML
@@ -69,16 +84,20 @@ router.post('/', async (req, res) => {
   if (!result) {
     res.send('Not found').status(404);
   } else {
-    const xmlBuilder = new xml2js.Builder({
-      rootName: 'mensaje',
-      headless: true,
-      xmldec: { version: '1.0', encoding: 'UTF-8' },
-      xmlSchema: xmlSchema,
-    });
-    const xml = xmlBuilder.buildObject({ message: 'Registro de alquiler creado exitosamente' });
+    res.redirect('/alquiler');
+  }
+});
 
-    res.set('Content-Type', 'application/xml');
-    res.send(xml).status(200);
+// Generar vista para editar por ID
+router.get('/editar/:id', async (req, res) => {
+  const dbConnect = dbo.getDb();
+  let query = { _id: new ObjectId(req.params.id) };
+  let result = await dbConnect.collection(COLLECTION).findOne(query);
+
+  if (!result) {
+    res.status(404).json({ message: 'Vivienda no encontrada' });
+  } else {
+    res.render('editarAlquiler', { vivienda: result });
   }
 });
 
@@ -92,16 +111,7 @@ router.put('/:id', async (req, res) => {
   if (!result.value) {
     res.send('Not found').status(404);
   } else {
-    const xmlBuilder = new xml2js.Builder({
-      rootName: 'mensaje',
-      headless: true,
-      xmldec: { version: '1.0', encoding: 'UTF-8' },
-      xmlSchema: xmlSchema,
-    });
-    const xml = xmlBuilder.buildObject({ message: 'Registro de alquiler actualizado exitosamente' });
-
-    res.set('Content-Type', 'application/xml');
-    res.send(xml).status(200);
+    res.redirect('/alquiler');
   }
 });
 
@@ -110,7 +120,12 @@ router.delete('/:id', async (req, res) => {
   const query = { _id: new ObjectId(req.params.id) };
   const dbConnect = dbo.getDb();
   let result = await dbConnect.collection(COLLECTION).deleteOne(query);
-  res.status(200).send(result);
+  if (result.deletedCount === 0) {
+    res.status(404).json({ message: 'Vivienda no encontrada' });
+  } else {
+    res.redirect('/alquiler');
+  }
+
 });
 
 module.exports = router;
