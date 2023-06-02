@@ -42,26 +42,6 @@ router.get('/', async (req, res) => {
 
 
 // Obtener un registro de alquiler por ID en formato XML
-// router.get('/:id', async (req, res) => {
-//   const dbConnect = dbo.getDb();
-//   let query = { _id: new ObjectId(req.params.id) };
-//   let result = await dbConnect.collection(COLLECTION).findOne(query);
-//   if (!result) {
-//     res.send('Not found').status(404);
-//   } else {
-//     const xmlBuilder = new xml2js.Builder({
-//       rootName: 'alquiler',
-//       headless: true,
-//       xmldec: { version: '1.0', encoding: 'UTF-8' },
-//       xmlSchema: xmlSchema,
-//     });
-//     const xml = xmlBuilder.buildObject(result);
-
-//     res.set('Content-Type', 'application/xml');
-//     res.send(xml).status(200);
-//   }
-// });
-
 router.get('/:id', async (req, res) => {
   const dbConnect = dbo.getDb();
   let query = { _id: new ObjectId(req.params.id) };
@@ -69,9 +49,29 @@ router.get('/:id', async (req, res) => {
   if (!result) {
     res.send('Not found').status(404);
   } else {
-    res.render('alquilerVista', { viviendas: result });
+    const xmlBuilder = new xml2js.Builder({
+      rootName: 'alquiler',
+      headless: true,
+      xmldec: { version: '1.0', encoding: 'UTF-8' },
+      xmlSchema: xmlSchema,
+    });
+    const xml = xmlBuilder.buildObject(result);
+
+    res.set('Content-Type', 'application/xml');
+    res.send(xml).status(200);
   }
 });
+
+// router.get('/:id', async (req, res) => {
+//   const dbConnect = dbo.getDb();
+//   let query = { _id: new ObjectId(req.params.id) };
+//   let result = await dbConnect.collection(COLLECTION).findOne(query);
+//   if (!result) {
+//     res.send('Not found').status(404);
+//   } else {
+//     res.render('alquilerVista', { viviendas: result });
+//   }
+// });
 
 router.get('/create/view', (req, res) => {
   res.render('createAlquiler');
