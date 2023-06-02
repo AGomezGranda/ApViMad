@@ -54,7 +54,7 @@
               <td><%= vivienda.propietario %></td>
               <td><%= vivienda.precio %></td>
               <td>
-                <a href="/alquiler/<%= vivienda._id %>" class="btn btn-primary btn-sm">Ver</a>
+                <a href="/alquiler/<%= vivienda._id %>?_method=PUT" class="btn btn-primary btn-sm">Ver</a>
                 <form action="/alquiler/editar/<%= vivienda._id %>" method="GET" style="display: inline;">
                   <button type="submit" class="btn btn-secondary btn-sm" >Editar</button>
                 </form>

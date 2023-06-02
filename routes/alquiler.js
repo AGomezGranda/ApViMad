@@ -66,6 +66,12 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+
+router.get('/create/view', (req, res) => {
+  res.render('createAlquiler');
+});
+
+
 // Agregar un registro de alquiler en formato XML
 router.post('/', async (req, res) => {
   const dbConnect = dbo.getDb();
@@ -76,6 +82,23 @@ router.post('/', async (req, res) => {
     res.redirect('/alquiler');
   }
 });
+
+
+router.get('/editar/:id', async (req, res) => {
+  const { id } = req.params;
+  const dbConnect = dbo.getDb();
+  let query = {_id: new ObjectId(id)};
+  let vivienda = await dbConnect
+    .collection(COLLECTION)
+    .findOne(query);
+  if (!vivienda) {
+    res.status(404).json({ message: 'Vivienda no encontrada' });
+  } else {
+    res.render('editarAlquiler', { vivienda });
+  }
+});
+
+
 
 // Actualizar un registro de alquiler por ID
 router.put('/:id', async (req, res) => {
