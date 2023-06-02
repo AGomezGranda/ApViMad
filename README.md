@@ -20,3 +20,9 @@ Jaime Ruiz-Ogarrio Matías,
 1. ExpressJS como framework de JavaScript
 2. Librería de CSS como Bootstrap o TailwindCSS
 3. Base de Datos NoSQL con MongoDB
+
+## Utilizar la app
+
+1. Clonar el repositorio
+2. Instalar las dependencias: npm install
+3. Iniciar la app: seT DEBUG=practica-sw2:* & npm start
