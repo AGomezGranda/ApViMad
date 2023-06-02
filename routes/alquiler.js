@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
   let next = req.query.next;
   let query = {}
   if (next){
-    query = {_id:  new ObjectId(next)}
+     query = {_id: {$lt: new ObjectId(next)}}
   }
   const dbConnect = dbo.getDb();
   let results = await dbConnect

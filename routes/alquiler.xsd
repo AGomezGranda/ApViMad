@@ -7,7 +7,7 @@
         <xs:element name="barrio" type="xs:string"/>
         <xs:element name="calle" type="xs:string"/>
         <xs:element name="numero" type="xs:integer"/>
-        <xs:element name="piso" type="xs:string"/>
+        <xs:element name="piso" type="xs:integer"/>
         <xs:element name="propietario" type="xs:string"/>
         <xs:element name="precio" type="xs:string"/>
       </xs:sequence>
