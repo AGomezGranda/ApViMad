@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const dbo = require('../db/conn');
-const { ObjectId } = require('mongodb');
+const ObjectId = require('mongodb').ObjectId;
 const xml2js = require('xml2js');
 const fs = require('fs');
 const MAX_RESULTS = parseInt(process.env.MAX_RESULTS);
@@ -19,39 +19,27 @@ dbo.connectToDatabase();
 // Obtener todos los registros de alquiler en formato XML
 router.get('/', async (req, res) => {
   let limit = MAX_RESULTS;
-  if (req.query.limit) {
+  if (req.query.limit){
     limit = Math.min(parseInt(req.query.limit), MAX_RESULTS);
   }
   let next = req.query.next;
-  let query = {};
-  if (next) {
-    try {
-      query = { _id: { $lt: ObjectId.createFromHexString(next) } };
-    } catch (err) {
-      res.status(400).send('Invalid value for "next" parameter');
-      return;
-    }
+  let query = {}
+  if (next){
+    query = {_id:  new ObjectId(next)}
   }
   const dbConnect = dbo.getDb();
   let results = await dbConnect
     .collection(COLLECTION)
-    .find(query)
-    .sort({ _id: -1 })
+    .find(query,{projection:{descripcion:1, barrio:1, calle:1, numero:1, piso:1, propietario:1, precio:1}})
+    .sort({_id: -1})
     .limit(limit)
     .toArray()
-    .catch((err) => res.status(400).send('Error searching for alquiler'));
+    .catch(err => res.status(400).send('Error searching for viviendas'));
 
-  const xmlBuilder = new xml2js.Builder({
-    rootName: 'alquiler',
-    headless: true,
-    xmldec: { version: '1.0', encoding: 'UTF-8' },
-    xmlSchema: xmlSchema,
-  });
-  const xml = xmlBuilder.buildObject({ alquiler: results });
-
-  res.set('Content-Type', 'application/xml');
-  res.send(xml).status(200);
+  next = results.length == limit ? results[results.length - 1]._id : null;
+  res.render('viviendas', { title: 'ApViMad', viviendas: results });
 });
+
 
 // Obtener un registro de alquiler por ID en formato XML
 router.get('/:id', async (req, res) => {
