@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.1.3
 info:
   title: ApViMad API REST
   description: |-
@@ -12,13 +12,13 @@ paths:
       summary: GET de las viviendas
       description: Muestra todas las viviendas disponibles
       responses:
-        '200':
-          description: 'OK'
+        "200":
+          description: "OK"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/viviendas' 
-  
+                $ref: "#/components/schemas/viviendas"
+
     post:
       summary: Crea una nueva vivienda
       description: Para crear una nueva vivienda cumplir y rellenar los campos descritos en el schema de vivienda asi como el tipo de dato de los mismos
@@ -29,20 +29,20 @@ paths:
             schema:
               $ref: "#/components/schemas/vivienda"
       responses:
-        '201':
-          description: 'Created'
+        "201":
+          description: "Created"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/nuevaVivienda' 
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+                $ref: "#/components/schemas/nuevaVivienda"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/ServerError"
   /viviendas/{id}:
     parameters:
       - $ref: "#/components/parameters/id"
@@ -53,9 +53,9 @@ paths:
         "200":
           description: "OK"
           content:
-             application/json:
-              schema: 
-                $ref: '#/components/schemas/vivienda'
+            application/json:
+              schema:
+                $ref: "#/components/schemas/vivienda"
     put:
       summary: Editar una vivienda
       description: Permite modificar los datos de una vivienda concreta siempre y cuando se cumplan los requisitos de su schema
@@ -72,50 +72,83 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/nuevaVivienda"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/ServerError"
     delete:
       summary: Eliminar una vivienda
       description: Borra una vivienda de forma definitiva
       responses:
         "200":
           description: "Ok"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
-  /usuarios/{id}:
-    parameters:
-      - $ref: "#/components/parameters/id"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/ServerError"
+
+  /alquiler:
     get:
-      summary: Obtener información de un usuario concreto
-      description: Permite al usuario obtener y visualzar los datos de su correspondiente perfil
+      summary: GET de alquiler
+      description: Muestra todas los alquileres disponibles
       responses:
         "200":
           description: "OK"
           content:
-             application/json:
-              schema: 
-                $ref: '#/components/schemas/usuario'
+            application/json:
+              schema:
+                $ref: "#/components/schemas/alquiler"
+
+      post:
+        summary: Crea una nueva vivienda de alquiler
+        description: Para crear una nueva vivienda cumplir y rellenar los campos descritos en el schema de vivienda asi como el tipo de dato de los mismos
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/alquiler"
+        responses:
+          "201":
+            description: "Created"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/nuevoAlquiler"
+          "404":
+            $ref: "#/components/responses/NotFound"
+          "500":
+            $ref: "#/components/responses/ServerError"
+  /alquiler/{id}:
+    parameters:
+      - $ref: "#/components/parameters/id"
+    get:
+      summary: Obtener información de un alquiler concreto
+      description: Permite al usuario obtener y visualzar los datos de las viviendas en alquiler
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/alquiler"
     put:
-      summary: Editar un usuario
-      description: Permite al usuario modificar los datos de su perfil
+      summary: Editar un alquiler
+      description: Permite al usuario modificar un alquiler
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/actualizar_usuario"
+              $ref: "#/components/schemas/actualizar_alquiler"
       responses:
         "200":
           description: "Ok"
@@ -123,28 +156,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/nuevoUsuario"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/ServerError"
     delete:
-      summary: Eliminar un usuario
-      description: Permite al usuario borrar su perfil
+      summary: Eliminar un alquiler
+      description: Permite al usuario borrar un alquiler
       responses:
         "200":
           description: "Ok"
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/ServerError'        
+        "404":
+          $ref: "#/components/responses/NotFound"
 components:
   parameters:
     id:
@@ -157,7 +180,7 @@ components:
   responses:
     BadRequest:
       description: (BadRequest) los datos enviados son incorrectos o hay datos obligatorios no enviados
-    Unauthorized: 
+    Unauthorized:
       description: (Unauthorized) las credenciales de autorización no son validas
     NotFound:
       description: (NotFound) no se encontró la información
@@ -191,7 +214,7 @@ components:
           description: numero de portal de la vivienda
         piso:
           type: string
-          description: planta y puerta de la vivienda  
+          description: planta y puerta de la vivienda
         propietario:
           type: string
           description: dueño de la vivienda
@@ -209,69 +232,67 @@ components:
           format: uri
     actualizar_vivienda:
       required:
-      - id
-      - descripcion
-      - barrio
-      - calle
-      - numero
-      - piso
-      - propietario
-      - precio
+        - id
+        - descripcion
+        - barrio
+        - calle
+        - numero
+        - piso
+        - propietario
+        - precio
       $ref: "#/components/schemas/vivienda"
       url:
-          description: Enlace a la vivienda editada
-          type: string
-          format: uri
-    usuario:
+        description: Enlace a la vivienda editada
+        type: string
+        format: uri
+
+    alquiler:
       type: object
       properties:
         id:
           $ref: "#/components/schemas/id"
-        nombre:
+        descripcion:
           type: string
-          description: nombre de la persona asociada al usuario
-        apellidos:
+          description: resumen de la vivienda en alquiler
+        barrio:
           type: string
-          description: apellidos de la persona asociada al usuario
-        email:
+          description: barrio donde se encuentra la vivienda en alquiler
+        calle:
           type: string
-          description: email de la persona asociada al usuario
-        telefono:
+          description: calle donde se encuentra la vivienda en alquiler
+        numero:
           type: integer
-          description: numero de teléfono del usuario
-        ciudad:
+          description: numero de portal de la vivienda en alquiler
+        piso:
           type: string
-          description: lugar de residencia del usuario  
-        pais:
+          description: planta y puerta de la vivienda en alquiler
+        propietario:
           type: string
-          description: pais de residencia del usuario
-        username:
+          description: dueño de la vivienda en alquiler
+        precio:
           type: string
-          description: nombre de usuario
-        contraseña:
-          type: string
-          description: nombre de usuario
-    nuevoUsuario:
+          description: coste de la vivienda en alquiler
+    nuevoAlquiler:
       type: object
       properties:
         id:
           $ref: "#/components/schemas/id"
         url:
-          description: Enlace al usuario creado
+          description: Enlace al alquiler creada
           type: string
           format: uri
-    actualizar_usuario:
+    actualizar_alquiler:
       required:
-      - id
-      - descripcion
-      - barrio
-      - calle
-      - numero
-      - piso
-      - propietario
-      - precio
+        - id
+        - descripcion
+        - barrio
+        - calle
+        - numero
+        - piso
+        - propietario
+        - precio
       $ref: "#/components/schemas/vivienda"
       url:
-          description: Enlace a la vivienda editada
-          type: string
-          format: uri    
+        description: Enlace al alquiler editado
+        type: string
+        format: uri

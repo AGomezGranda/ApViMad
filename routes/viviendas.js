@@ -32,7 +32,9 @@ router.get('/', async (req, res) => {
     .catch(err => res.status(400).send('Error searching for viviendas'));
 
   next = results.length == limit ? results[results.length - 1]._id : null;
-  res.render('viviendas', { title: 'ApViMad', viviendas: results });
+  
+  res.status(200).json({ message: 'Viviendas encontradas', results });
+  // res.render('viviendas', { title: 'ApViMad', viviendas: results });
 });
 
 // Obtener una vivienda concreta
@@ -45,7 +47,8 @@ router.get('/:id', async (req, res) => {
   if (!result){
     res.send("Not found").status(404);
   } else {
-    res.render('vivienda', { title: 'ApViMad', vivienda: result });
+    res.status(200).json({ message: 'Vivienda encontrada', result }).render('vivienda', { title: 'ApViMad', vivienda: result });
+    // res.render('vivienda', { title: 'ApViMad', vivienda: result });
   }
 });
 
@@ -61,11 +64,12 @@ router.post('/', async (req, res) => {
     .collection(COLLECTION)
     .insertOne(req.body);
   if (!result){
-    res.send("Not found").status(404);
+    res.send("Not found").status(400);
   } else {
-    res.redirect('/viviendas');
+    res.status(200).json({ message: 'Vivienda creada', result });
   }
 });
+
 
 // Ruta para acceder a la vista de editar
 router.get('/editar/:id', async (req, res) => {
@@ -93,7 +97,8 @@ router.put('/:id', async (req, res) => {
   if (!result || result.modifiedCount === 0) {
     return res.status(404).json({ message: 'Vivienda no encontrada' });
   }
-  res.redirect('/viviendas');
+  // send result 
+  res.status(200).json({ message: 'Vivienda actualizada', result });
 });
 
 // Eliminar una vivienda
@@ -106,7 +111,7 @@ router.delete('/:id', async (req, res) => {
   if (result.deletedCount === 0) {
     res.status(404).json({ message: 'Vivienda no encontrada' });
   } else {
-    res.redirect('/viviendas');
+    res.status(200).json({ message: 'Vivienda eliminada', result });
   }
 });
 
