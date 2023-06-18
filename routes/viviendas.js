@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
   if (!result){
     res.send("Not found").status(404);
   } else {
-    res.status(200).json({ message: 'Vivienda encontrada', result }).render('vivienda', { title: 'ApViMad', vivienda: result });
+    res.status(200).json({ message: 'Vivienda encontrada', result });
     // res.render('vivienda', { title: 'ApViMad', vivienda: result });
   }
 });

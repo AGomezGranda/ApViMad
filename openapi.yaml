@@ -127,7 +127,7 @@ paths:
       summary: Editar un alquiler
       description: Permite al usuario modificar un alquiler
       requestBody:
-        required: true
+        required: true 
         content:
           application/json:
             schema:
@@ -193,7 +193,7 @@ components:
           type: string
           description: calle donde se encuentra la vivienda
         numero:
-          type: integer
+          type: number
           description: numero de portal de la vivienda
         piso:
           type: string
@@ -244,7 +244,7 @@ components:
           type: string
           description: calle donde se encuentra la vivienda en alquiler
         numero:
-          type: integer
+          type: number
           description: numero de portal de la vivienda en alquiler
         piso:
           type: string
